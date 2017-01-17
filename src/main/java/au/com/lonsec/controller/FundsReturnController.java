@@ -97,7 +97,7 @@ public class FundsReturnController {
 
         );
 
-        csvMonthPerformanceDAO.setHeaders(fundReturnSeriesList);
+        csvMonthPerformanceDAO.writeDetails(fundReturnSeriesList);
 
     }
 }

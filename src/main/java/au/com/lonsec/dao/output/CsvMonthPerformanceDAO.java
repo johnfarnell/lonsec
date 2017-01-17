@@ -3,14 +3,11 @@ package au.com.lonsec.dao.output;
 import au.com.bytecode.opencsv.CSVWriter;
 import au.com.lonsec.domain.FundReturnSeries;
 import au.com.lonsec.exception.FundReturnException;
-import jdk.nashorn.internal.runtime.ECMAException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.FileWriter;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -25,7 +22,7 @@ public class CsvMonthPerformanceDAO implements MonthlyPerformanceDAO
     private CsvMonthlyPerformanceProperties csvMonthlyPerformanceProperties;
 
 
-    public void setHeaders(List<FundReturnSeries> fundReturnSeriesList)
+    public void writeDetails(List<FundReturnSeries> fundReturnSeriesList)
     {
         CSVWriter csvWriter = null;
         try
