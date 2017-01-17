@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Countrywide Austral on 15-Jan-17.
  */
 @Controller
-public class FundsReturnController {
+public class FundReturnsController {
 
     @Autowired
     private FundReturnSeriesDAO fundReturnSeriesDAO;
