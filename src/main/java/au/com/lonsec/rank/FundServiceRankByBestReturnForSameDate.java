@@ -1,10 +1,8 @@
 package au.com.lonsec.rank;
 
-import au.com.lonsec.calculation.CalculateReturnPercentageDifference;
 import au.com.lonsec.domain.FundReturnSeries;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +14,6 @@ import java.util.*;
 @ConditionalOnProperty(name = "rank.fund.return", havingValue = "default", matchIfMissing = true)
 @Component
 public class FundServiceRankByBestReturnForSameDate implements FundReturnSeriesRank {
-    @Autowired
-    private CalculateReturnPercentageDifference calculateReturnPercentageDifference;
     @Override
     public void setRanking(List<FundReturnSeries> fundReturnSeriesList) {
 
