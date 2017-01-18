@@ -1,9 +1,12 @@
 package au.com.lonsec.unit.dao.output;
 
+import au.com.bytecode.opencsv.CSVReader;
 import au.com.lonsec.dao.output.CsvMonthPerformanceDAO;
 import au.com.lonsec.dao.output.CsvMonthlyPerformanceProperties;
 import au.com.lonsec.domain.Fund;
 import au.com.lonsec.domain.FundReturnSeries;
+import au.com.lonsec.exception.FundReturnException;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +15,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -39,8 +44,7 @@ public class CsvMonthPerformanceDAOTest {
     }
 
     @Test
-    public void testWriteDetails()
-    {
+    public void testWriteDetails() throws IOException {
         List<String> columnsAsList = new ArrayList<>();
         columnsAsList.add("FundName");
         columnsAsList.add("Date");
@@ -90,6 +94,36 @@ public class CsvMonthPerformanceDAOTest {
         fundReturnSeriesList.add(frs1);
         csvMonthPerformanceDAO.writeDetails(fundReturnSeriesList);
 
+        CSVReader reader = null;
+        try
+        {
+            reader = new CSVReader(new FileReader(csvMonthlyPerformanceProperties.getFolder()
+                    + csvMonthlyPerformanceProperties.getMonthPerformanceFileName()), ',', '"', 0);
+            String[] header = reader.readNext();
+            Assert.assertEquals("FundName", header[0]);
+            Assert.assertEquals("Date", header[1]);
+            Assert.assertEquals("Return", header[2]);
+            Assert.assertEquals("Rank", header[3]);
+            String[] line = reader.readNext();
+            Assert.assertEquals("fund1", line[0]);
+            Assert.assertEquals("15/03/2010", line[1]);
+            Assert.assertEquals("2.46", line[2]);
+            Assert.assertEquals("2", line[3]);
+        }
+        finally
+        {
+            reader.close();
+        }
+
+    }
+
+    @Test(expected=FundReturnException.class)
+    public void testExceptionIsThrownWhenNonExistentFolderIsSupplied()
+    {
+        when(csvMonthlyPerformanceProperties.getFolder()).thenReturn("zzz:///");
+        when(csvMonthlyPerformanceProperties.getMonthPerformanceFileName()).thenReturn("xyz.csv");
+        List<FundReturnSeries> fundReturnSeriesList = new ArrayList<>();
+        csvMonthPerformanceDAO.writeDetails(fundReturnSeriesList);
     }
 
 }
