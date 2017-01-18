@@ -22,23 +22,12 @@ public class BenchmarkReturnSeries {
         return benchmark;
     }
 
-    public void setBenchmark(Benchmark benchmark) {
-        this.benchmark = benchmark;
-    }
-
     public Date getDate() {
         return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public BigDecimal getReturnPercentage() {
         return returnPercentage;
     }
 
-    public void setReturnPercentage(BigDecimal returnPercentage) {
-        this.returnPercentage = returnPercentage;
-    }
 }

@@ -1,7 +1,8 @@
 package au.com.lonsec.unit.rank;
+
 import au.com.lonsec.calculation.CalculateReturnPercentageDifference;
-import au.com.lonsec.rank.FundServiceRankByBestReturnForSameDate;
 import au.com.lonsec.domain.FundReturnSeries;
+import au.com.lonsec.rank.FundServiceRankByBestReturnForSameDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

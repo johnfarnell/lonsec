@@ -10,5 +10,5 @@ import java.util.Date;
  */
 public interface BenchmarkReturnSeriesDAO {
 
-    BenchmarkReturnSeries getBenchmark(Benchmark benchmark, Date date);
+    BenchmarkReturnSeries getBenchmarkReturnSeries(Benchmark benchmark, Date date);
 }

@@ -1,7 +1,7 @@
 package au.com.lonsec.unit.factory;
 
 import au.com.bytecode.opencsv.CSVReader;
-import au.com.lonsec.dao.input.CSVFundReturnSeriesProperties;
+import au.com.lonsec.dao.input.CsvFundReturnSeriesProperties;
 import au.com.lonsec.exception.FundReturnException;
 import au.com.lonsec.factory.ReturnSeriesLine;
 import org.junit.Before;
@@ -19,7 +19,7 @@ public class ReturnSeriesLineTest {
     @Mock
     private CSVReader reader;
     @Mock
-    private CSVFundReturnSeriesProperties csvFundReturnSeriesInputProperties;
+    private CsvFundReturnSeriesProperties csvFundReturnSeriesInputProperties;
 
     @Before
     public void setUp()

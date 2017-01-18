@@ -1,6 +1,7 @@
 package au.com.lonsec.dao.input;
 
 import au.com.bytecode.opencsv.CSVReader;
+import au.com.lonsec.domain.Benchmark;
 import au.com.lonsec.domain.Fund;
 import au.com.lonsec.exception.FundReturnException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,43 +17,10 @@ import java.util.Map;
 public class CsvFundDAO implements FundDAO {
 
     @Autowired
-    private CSVFundReturnSeriesProperties csvFundReturnSeriesInputProperties;
+    private CsvFundReturnSeriesProperties csvFundReturnSeriesInputProperties;
     @Autowired
     private BenchmarkDAO benchmarkDAO;
     private Map<String, Fund> funds;
-
-//    private synchronized Map<String, Fund> getFunds()
-//    {
-//        if (funds == null)
-//        {
-//            try
-//            {
-//                funds = new HashMap<String, Fund>();
-////                reader = new CsvReader(csvFundReturnSeriesInputProperties.getFolder()
-////                        + csvFundReturnSeriesInputProperties.getFundFileName());
-//                reader = new CsvReader("./input/fund.csv");
-//                reader.readHeaders();
-//
-//                //FundCode,FundName,BenchmarkCode
-//                while (reader.readRecord())
-//                {
-//                    String fundCode = reader.get(FUND_RETURN_SERIES_FUND_CODE_COLUMN_NAME);
-//                    String fundName = reader.get(FUND_RETURN_SERIES_FUND_NAME_COLUMN_NAME);
-//                    String benchmarkCode = reader.get(FUND_RETURN_SERIES_BENCHMARK_CODE_COLUMN_NAME);
-//
-//                    System.out.println(fundCode + fundName + benchmarkCode);
-//
-//        //            funds.put(benchmarkCode, new Fund(fundCode, fundName, benchmarkDAO.getBenchmark(benchmarkCode)));
-//                }
-//            }
-//            catch (Exception e)
-//            {
-//                throw new FundReturnException(e);
-//            }
-//        }
-//
-//        return funds;
-//    }
 
     private synchronized Map<String, Fund> getFunds()
     {
@@ -64,19 +32,20 @@ public class CsvFundDAO implements FundDAO {
                 try
                 {
                     funds = new HashMap<String, Fund>();
-//                reader = new CsvReader(csvFundReturnSeriesInputProperties.getFolder()
-//                        + csvFundReturnSeriesInputProperties.getFundFileName());
                     reader = new CSVReader(new FileReader(csvFundReturnSeriesInputProperties.getFolder()
                             + csvFundReturnSeriesInputProperties.getFundFileName()), ',', '"', 1);
                     String [] nextLine;
                     while ((nextLine = reader.readNext()) != null) {
-                        // nextLine[] is an array of values from the line
-                        System.out.println(nextLine[0] + nextLine[1]  + nextLine[2]);
                         String fundCode = nextLine[0];
                         String fundName = nextLine[1];
                         String benchmarkCode = nextLine[2];
 
-                        funds.put(fundCode, new Fund(fundCode, fundName, benchmarkDAO.getBenchmark(benchmarkCode)));
+                        Benchmark benchmark = benchmarkDAO.getBenchmark(benchmarkCode);
+                        if (benchmark == null )
+                        {
+                            throw new FundReturnException("Bench mark code " + benchmarkCode + " in the fund csv file does not exist");
+                        }
+                        funds.put(fundCode, new Fund(fundCode, fundName, benchmark));
                     }
                 }
                 finally
@@ -86,6 +55,10 @@ public class CsvFundDAO implements FundDAO {
                         reader.close();
                     }
                 }
+            }
+            catch (FundReturnException e)
+            {
+                throw e;
             }
             catch (Exception e)
             {

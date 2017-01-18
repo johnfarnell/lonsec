@@ -19,23 +19,12 @@ public class Fund {
         return fundCode;
     }
 
-    public void setFundCode(String fundCode) {
-        this.fundCode = fundCode;
-    }
-
     public String getFundName() {
         return fundName;
-    }
-
-    public void setFundName(String fundName) {
-        this.fundName = fundName;
     }
 
     public Benchmark getBenchmark() {
         return benchmark;
     }
 
-    public void setBenchmark(Benchmark benchmark) {
-        this.benchmark = benchmark;
-    }
 }

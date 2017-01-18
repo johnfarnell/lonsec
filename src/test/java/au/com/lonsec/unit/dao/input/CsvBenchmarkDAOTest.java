@@ -1,8 +1,9 @@
 package au.com.lonsec.unit.dao.input;
 
-import au.com.lonsec.dao.input.CSVFundReturnSeriesProperties;
+import au.com.lonsec.dao.input.CsvFundReturnSeriesProperties;
 import au.com.lonsec.dao.input.CsvBenchmarkDAO;
 import au.com.lonsec.domain.Benchmark;
+import au.com.lonsec.exception.FundReturnException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -23,7 +26,7 @@ public class CsvBenchmarkDAOTest {
     @InjectMocks
     private CsvBenchmarkDAO csvBenchmarkDAO;
     @Mock
-    private CSVFundReturnSeriesProperties csvFundReturnSeriesInputProperties;
+    private CsvFundReturnSeriesProperties csvFundReturnSeriesInputProperties;
     @Before
     public void setUp()
     {
@@ -39,6 +42,14 @@ public class CsvBenchmarkDAOTest {
 
         assertNotNull(benchMark);
         assertEquals("BM-18", benchMark.getBenchmarkCode());
+    }
+
+    @Test(expected=FundReturnException.class)
+    public void testExceptionIsThrownWhenNonExistentFileIsSupplied()
+    {
+        when(csvFundReturnSeriesInputProperties.getFolder()).thenReturn("./input/");
+        when(csvFundReturnSeriesInputProperties.getBenchmarkFileName()).thenReturn("doesnotexist.csv");
+        csvBenchmarkDAO.getBenchmark("BM-18");
     }
 
 }
