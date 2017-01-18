@@ -18,7 +18,7 @@ import java.util.Map;
 public class CsvBenchmarkDAO implements BenchmarkDAO{
 
     @Autowired
-    private CSVFundReturnSeriesProperties csvFundReturnSeriesInputProperties;
+    private CsvFundReturnSeriesProperties csvFundReturnSeriesInputProperties;
     private Map<String, Benchmark> benchmarks;
 
     private synchronized Map<String, Benchmark> getBenchmarks()

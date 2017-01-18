@@ -18,10 +18,10 @@ import java.io.FileReader;
  */
 @Component
 @Profile("csvinput")
-public class CSVFundReturnSeriesDAO implements FundReturnSeriesDAO {
+public class CsvFundReturnSeriesDAO implements FundReturnSeriesDAO {
 
     @Autowired
-    private CSVFundReturnSeriesProperties csvFundReturnSeriesInputProperties;
+    private CsvFundReturnSeriesProperties csvFundReturnSeriesInputProperties;
     @Autowired
     private FundDAO fundDAO;
     @Autowired
@@ -63,8 +63,12 @@ public class CSVFundReturnSeriesDAO implements FundReturnSeriesDAO {
             if (line != null)
             {
                 Fund fund = fundDAO.getFund(line.getCode());
+                if (fund == null)
+                {
+                    throw new FundReturnException("Fund " + line.getCode() + " in the fund return series csv file does not exist");
+                }
                 BenchmarkReturnSeries benchmarkReturnSeries =
-                        benchmarkReturnSeriesDAO.getBenchmark(fund.getBenchmark(), line.getDate());
+                        benchmarkReturnSeriesDAO.getBenchmarkReturnSeries(fund.getBenchmark(), line.getDate());
                 return new FundReturnSeries(fund, line.getDate(), line.getReturnPercentage(), benchmarkReturnSeries);
             }
             else
@@ -72,6 +76,10 @@ public class CSVFundReturnSeriesDAO implements FundReturnSeriesDAO {
                 reader.close();
                 return null;
             }
+        }
+        catch (FundReturnException e)
+        {
+            throw e;
         }
         catch (Exception e)
         {

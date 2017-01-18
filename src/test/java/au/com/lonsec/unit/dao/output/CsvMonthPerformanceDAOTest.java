@@ -1,10 +1,7 @@
 package au.com.lonsec.unit.dao.output;
 
-import au.com.lonsec.dao.input.BenchmarkDAO;
-import au.com.lonsec.dao.input.CSVFundReturnSeriesProperties;
 import au.com.lonsec.dao.output.CsvMonthPerformanceDAO;
 import au.com.lonsec.dao.output.CsvMonthlyPerformanceProperties;
-import au.com.lonsec.domain.Benchmark;
 import au.com.lonsec.domain.Fund;
 import au.com.lonsec.domain.FundReturnSeries;
 import org.junit.Before;

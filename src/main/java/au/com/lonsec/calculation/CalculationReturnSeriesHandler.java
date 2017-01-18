@@ -15,7 +15,7 @@ import java.util.List;
 public class CalculationReturnSeriesHandler {
 
     @Autowired(required=false)
-    private List<FundReturnSeriesCalculation> fundReturnSeriesCalculations = new ArrayList<>();
+    private List<FundReturnSeriesCalculation> fundReturnSeriesCalculations;
 
     public void addCalculatedValues(FundReturnSeries fundReturnSeries)
     {

@@ -4,7 +4,7 @@ import au.com.lonsec.calculation.CalculationReturnSeriesHandler;
 import au.com.lonsec.controller.FundReturnsController;
 import au.com.lonsec.controller.ReturnSeriesList;
 import au.com.lonsec.dao.input.FundReturnSeriesDAO;
-import au.com.lonsec.dao.output.CsvMonthPerformanceDAO;
+import au.com.lonsec.dao.output.MonthlyPerformanceDAO;
 import au.com.lonsec.description.DisplayReturnSeriesHandler;
 import au.com.lonsec.domain.FundReturnSeries;
 import au.com.lonsec.rank.FundReturnSeriesRank;
@@ -29,7 +29,7 @@ public class FundReturnsControllerTest {
     @Mock
     private FundReturnSeriesDAO fundReturnSeriesDAO;
     @Mock
-    private CsvMonthPerformanceDAO csvMonthPerformanceDAO;
+    private MonthlyPerformanceDAO monthlyPerformanceDAO;
     @Mock
     private FundReturnSeriesRank fundReturnSeriesRank;
     @Mock
@@ -76,7 +76,7 @@ public class FundReturnsControllerTest {
         List<FundReturnSeries> sortedFundReturnSeriesList = new ArrayList<>();
         when(returnSeriesList.sort()).thenReturn(sortedFundReturnSeriesList);
 
-        doNothing().when(csvMonthPerformanceDAO).writeDetails(sortedFundReturnSeriesList);
+        doNothing().when(monthlyPerformanceDAO).writeDetails(sortedFundReturnSeriesList);
 
 
         fundReturnsController.execute();
@@ -101,7 +101,7 @@ public class FundReturnsControllerTest {
         verify(fundReturnSeriesRank, times(1)).setRanking(fundReturnSeriesList);
 //        verify(fundReturnSeriesComparator, times(1)).getComparator();
 
-        //This last one is important csvMonthPerformanceDAO MUST use the sortedFundReturnSeriesList
-        verify(csvMonthPerformanceDAO, times(1)).writeDetails(sortedFundReturnSeriesList);
+        //This last one is important monthlyPerformanceDAO MUST use the sortedFundReturnSeriesList
+        verify(monthlyPerformanceDAO, times(1)).writeDetails(sortedFundReturnSeriesList);
     }
 }

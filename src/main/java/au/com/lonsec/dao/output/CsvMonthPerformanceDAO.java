@@ -4,6 +4,7 @@ import au.com.bytecode.opencsv.CSVWriter;
 import au.com.lonsec.domain.FundReturnSeries;
 import au.com.lonsec.exception.FundReturnException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.io.FileWriter;
@@ -15,6 +16,7 @@ import java.util.TreeMap;
 /**
  * Created by Countrywide Austral on 16-Jan-17.
  */
+@ConditionalOnProperty(name = "csv.monthly.performance.dao", havingValue = "default", matchIfMissing = true)
 @Component
 public class CsvMonthPerformanceDAO implements MonthlyPerformanceDAO
 {

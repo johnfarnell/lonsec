@@ -1,7 +1,7 @@
 package au.com.lonsec.factory;
 
 import au.com.bytecode.opencsv.CSVReader;
-import au.com.lonsec.dao.input.CSVFundReturnSeriesProperties;
+import au.com.lonsec.dao.input.CsvFundReturnSeriesProperties;
 import au.com.lonsec.exception.FundReturnException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ import java.io.IOException;
 @Component
 public class BenchmarkReturnSeriesFactory {
     @Autowired
-    private CSVFundReturnSeriesProperties csvFundReturnSeriesInputProperties;
+    private CsvFundReturnSeriesProperties csvFundReturnSeriesInputProperties;
     public ReturnSeriesLine create(String lineId, CSVReader reader) {
         try
         {

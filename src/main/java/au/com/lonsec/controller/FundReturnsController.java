@@ -2,14 +2,12 @@ package au.com.lonsec.controller;
 
 import au.com.lonsec.calculation.CalculationReturnSeriesHandler;
 import au.com.lonsec.dao.input.FundReturnSeriesDAO;
-import au.com.lonsec.dao.output.CsvMonthPerformanceDAO;
+import au.com.lonsec.dao.output.MonthlyPerformanceDAO;
 import au.com.lonsec.description.DisplayReturnSeriesHandler;
 import au.com.lonsec.rank.FundReturnSeriesRank;
 import au.com.lonsec.domain.FundReturnSeries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
-import java.util.List;
 
 /**
  * Created by Countrywide Austral on 15-Jan-17.
@@ -21,7 +19,7 @@ public class FundReturnsController {
     private FundReturnSeriesDAO fundReturnSeriesDAO;
 
     @Autowired
-    private CsvMonthPerformanceDAO csvMonthPerformanceDAO;
+    private MonthlyPerformanceDAO monthlyPerformanceDAO;
 
     @Autowired
     private CalculationReturnSeriesHandler calculationReturnSeriesHandler;
@@ -57,7 +55,7 @@ public class FundReturnsController {
 
         //Supply the list to calculate the ranking
         fundReturnSeriesRank.setRanking(returnSeriesList.getFundReturnSeriesList());
-        csvMonthPerformanceDAO.writeDetails(returnSeriesList.sort());
+        monthlyPerformanceDAO.writeDetails(returnSeriesList.sort());
 
     }
 }

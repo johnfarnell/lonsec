@@ -25,16 +25,16 @@ import static org.mockito.Mockito.verify;
  */
 public class CalculationReturnSeriesHandlerTest {
     private CalculationReturnSeriesHandler calculationReturnSeriesHandler;
+
     @Test
-    public void testAddCalculatedValues()
-    {
+    public void testAddCalculatedValues() {
         calculationReturnSeriesHandler = new CalculationReturnSeriesHandler();
         List<FundReturnSeriesCalculation> fundReturnSeriesCalculations = new ArrayList<>();
 
         //Set up and mock a couple of FundReturnSeriesCalculation in the list
-        FundReturnSeriesCalculation fundReturnSeriesCalculation1 =  mock(FundReturnSeriesCalculation.class);
+        FundReturnSeriesCalculation fundReturnSeriesCalculation1 = mock(FundReturnSeriesCalculation.class);
         fundReturnSeriesCalculations.add(fundReturnSeriesCalculation1);
-        FundReturnSeriesCalculation fundReturnSeriesCalculation2 =  mock(FundReturnSeriesCalculation.class);
+        FundReturnSeriesCalculation fundReturnSeriesCalculation2 = mock(FundReturnSeriesCalculation.class);
         fundReturnSeriesCalculations.add(fundReturnSeriesCalculation2);
 
         //Assign this list to the target test instance of calculationReturnSeriesHandler
@@ -64,9 +64,15 @@ public class CalculationReturnSeriesHandlerTest {
 
         verify(fundReturnSeries, times(1)).addCalculatedValue("CalculationLabel1", new BigDecimal("3.445"));
         verify(fundReturnSeries, times(1)).addCalculatedValue("CalculationLabel2", new BigDecimal("4.445"));
+    }
 
-
-
-
+    @Test
+    public void testHandlesNullList() {
+        //Assign NULL
+        calculationReturnSeriesHandler = new CalculationReturnSeriesHandler();
+        ReflectionTestUtils.setField(calculationReturnSeriesHandler, "fundReturnSeriesCalculations"
+                , null, List.class);
+        FundReturnSeries fundReturnSeries = mock(FundReturnSeries.class);
+        calculationReturnSeriesHandler.addCalculatedValues(fundReturnSeries);
     }
 }

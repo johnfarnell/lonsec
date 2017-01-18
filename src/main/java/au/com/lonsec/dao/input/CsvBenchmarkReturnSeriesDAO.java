@@ -21,7 +21,7 @@ import java.util.Map;
 @Component
 public class CsvBenchmarkReturnSeriesDAO implements BenchmarkReturnSeriesDAO {
     @Autowired
-    private CSVFundReturnSeriesProperties csvFundReturnSeriesInputProperties;
+    private CsvFundReturnSeriesProperties csvFundReturnSeriesInputProperties;
     @Autowired
     private BenchmarkReturnSeriesFactory benchmarkReturnSeriesFactory;
     @Autowired
@@ -55,12 +55,21 @@ public class CsvBenchmarkReturnSeriesDAO implements BenchmarkReturnSeriesDAO {
                         }
 
                         Benchmark benchmark = benchmarkDAO.getBenchmark(line.getCode());
+
+                        if (benchmark == null )
+                        {
+                            throw new FundReturnException("Bench mark code " + line.getCode() + " in the benchmark return series csv file does not exist");
+                        }
                         BenchmarkReturnSeries benchmarkReturnSeries = new BenchmarkReturnSeries(benchmark, line.getDate(), line.getReturnPercentage());
                         this.benchmarkReturnSeries.put(new BenchmarkReturnSeriesKey(benchmarkReturnSeries), benchmarkReturnSeries);
                     }
                 }
                 finally
                 {
+                    if (reader != null)
+                    {
+                        reader.close();
+                    }
 
                 }
             }
@@ -74,7 +83,7 @@ public class CsvBenchmarkReturnSeriesDAO implements BenchmarkReturnSeriesDAO {
     }
 
     @Override
-    public BenchmarkReturnSeries getBenchmark(Benchmark benchmark, Date date)
+    public BenchmarkReturnSeries getBenchmarkReturnSeries(Benchmark benchmark, Date date)
     {
         return getBenchmarkReturnSeries().get(new BenchmarkReturnSeriesKey(benchmark, date));
     }

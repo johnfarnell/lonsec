@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties("csv.input")
 @Profile("csvinput")
-public class CSVFundReturnSeriesProperties {
+public class CsvFundReturnSeriesProperties {
     private String folder;
     private String fundFileName;
     private String benchmarkFileName;

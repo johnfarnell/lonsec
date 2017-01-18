@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public class DisplayReturnSeriesHandler {
     @Autowired(required=false)
-    private List<DisplayReturnServiceLiteral> displayReturnServiceLiterals = new ArrayList<>();
+    private List<DisplayReturnServiceLiteral> displayReturnServiceLiterals ;
     public void addDisplayValues(FundReturnSeries fundReturnSeries) {
         if (displayReturnServiceLiterals != null)
         {

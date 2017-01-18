@@ -26,17 +26,10 @@ public class FundReturnSeries {
         return fund;
     }
 
-    public void setFund(Fund fund) {
-        this.fund = fund;
-    }
-
     public Date getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
     public BigDecimal getReturnPercentage() {
         return returnPercentage;
     }
