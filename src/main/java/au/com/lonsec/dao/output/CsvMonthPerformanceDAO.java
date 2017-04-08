@@ -26,26 +26,26 @@ public class CsvMonthPerformanceDAO implements MonthlyPerformanceDAO
 
     public void writeDetails(List<FundReturnSeries> fundReturnSeriesList)
     {
-        CSVWriter csvWriter = null;
+        CSVWriter csvWriter_trial2 = null;
         try
         {
             try
             {
-                csvWriter = new CSVWriter(new FileWriter(csvMonthlyPerformanceProperties.getFolder() + csvMonthlyPerformanceProperties.getMonthPerformanceFileName())
+                csvWriter_trial2 = new CSVWriter(new FileWriter(csvMonthlyPerformanceProperties.getFolder() + csvMonthlyPerformanceProperties.getMonthPerformanceFileName())
                         , ',', '"');
-                csvWriter.writeNext(csvMonthlyPerformanceProperties.getColumns());
+                csvWriter_trial2.writeNext(csvMonthlyPerformanceProperties.getColumns());
 
                 for (FundReturnSeries fundReturnSeries :fundReturnSeriesList)
                 {
                     String[] values = getValues(fundReturnSeries, csvMonthlyPerformanceProperties.getColumnsAsList());
-                    csvWriter.writeNext(values);
+                    csvWriter_trial2.writeNext(values);
                 }
             }
             finally
             {
-                if (csvWriter != null)
+                if (csvWriter_trial2 != null)
                 {
-                    csvWriter.close();;
+                    csvWriter_trial2.close();;
                 }
             }
         }
@@ -60,27 +60,27 @@ public class CsvMonthPerformanceDAO implements MonthlyPerformanceDAO
     private String[] getValues(FundReturnSeries fundReturnSeries, List<String> columns)
     {
         Map<Integer, String> sortedMap = new TreeMap<>();
-        int indexofColumn = columns.indexOf(csvMonthlyPerformanceProperties.getDateColumnName());
-        if (indexofColumn > -1)
+        int iColumn = columns.indexOf(csvMonthlyPerformanceProperties.getDateColumnName());
+        if (iColumn > -1)
         {
-            sortedMap.put(indexofColumn, csvMonthlyPerformanceProperties.getSdfDate().format(fundReturnSeries.getDate()));
+            sortedMap.put(iColumn, csvMonthlyPerformanceProperties.getSdfDate().format(fundReturnSeries.getDate()));
         }
-        indexofColumn = columns.indexOf(csvMonthlyPerformanceProperties.getFundNameColumnName());
-        if (indexofColumn > -1)
+        iColumn = columns.indexOf(csvMonthlyPerformanceProperties.getFundNameColumnName());
+        if (iColumn > -1)
         {
-            sortedMap.put(indexofColumn, fundReturnSeries.getFund().getFundName());
-        }
-
-        indexofColumn = columns.indexOf(csvMonthlyPerformanceProperties.getReturnColumnName());
-        if (indexofColumn > -1)
-        {
-            sortedMap.put(indexofColumn, csvMonthlyPerformanceProperties.getDecimalFormat().format(fundReturnSeries.getReturnPercentage()));
+            sortedMap.put(iColumn, fundReturnSeries.getFund().getFundName());
         }
 
-        indexofColumn = columns.indexOf(csvMonthlyPerformanceProperties.getRankColumnName());
-        if (indexofColumn > -1)
+        iColumn = columns.indexOf(csvMonthlyPerformanceProperties.getReturnColumnName());
+        if (iColumn > -1)
         {
-            sortedMap.put(indexofColumn, String.valueOf(fundReturnSeries.getRank()));
+            sortedMap.put(iColumn, csvMonthlyPerformanceProperties.getDecimalFormat().format(fundReturnSeries.getReturnPercentage()));
+        }
+
+        iColumn = columns.indexOf(csvMonthlyPerformanceProperties.getRankColumnName());
+        if (iColumn > -1)
+        {
+            sortedMap.put(iColumn, String.valueOf(fundReturnSeries.getRank()));
         }
 
         /*
@@ -89,14 +89,14 @@ public class CsvMonthPerformanceDAO implements MonthlyPerformanceDAO
 
         for (String column : columns)
         {
-            indexofColumn = columns.indexOf(column);
+            iColumn = columns.indexOf(column);
             /*
             See if the column is associated with one of the display values
              */
             String value = fundReturnSeries.getDisplayValue(column);
             if (value != null)
             {
-                sortedMap.put(indexofColumn, value);
+                sortedMap.put(iColumn, value);
                 continue;
             }
             /*
@@ -105,7 +105,7 @@ public class CsvMonthPerformanceDAO implements MonthlyPerformanceDAO
             BigDecimal bdValue = fundReturnSeries.getCalculatedValue(column);
             if (bdValue != null)
             {
-                sortedMap.put(indexofColumn, csvMonthlyPerformanceProperties.getDecimalFormat().format(bdValue));
+                sortedMap.put(iColumn, csvMonthlyPerformanceProperties.getDecimalFormat().format(bdValue));
                 continue;
             }
         }

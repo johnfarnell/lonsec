@@ -36,21 +36,21 @@ public class FundReturnsController {
     public void execute()
     {
         //Loop throguh the Fund Return Series
-        FundReturnSeries fundReturnSeries = fundReturnSeriesDAO.getFirstReturnSeries();
+        FundReturnSeries frs = fundReturnSeriesDAO.getFirstReturnSeries();
 
         //Clear the list
         returnSeriesList.clear();
-        while (fundReturnSeries != null) //the DAO will  return null when there are no more FundReturnSeries
+        while (frs != null) //the DAO will  return null when there are no more FundReturnSeries
         {
             //Add any configured calculations
-            calculationReturnSeriesHandler.addCalculatedValues(fundReturnSeries);
+            calculationReturnSeriesHandler.addCalculatedValues(frs);
             //Add any configured displays
-            displayReturnSeriesHandler.addDisplayValues(fundReturnSeries);
+            displayReturnSeriesHandler.addDisplayValues(frs);
 
             //Add to the list
-            returnSeriesList.add(fundReturnSeries);
+            returnSeriesList.add(frs);
             //get next
-            fundReturnSeries = fundReturnSeriesDAO.getNextReturnSeries();
+            frs = fundReturnSeriesDAO.getNextReturnSeries();
         }
 
         //Supply the list to calculate the ranking
