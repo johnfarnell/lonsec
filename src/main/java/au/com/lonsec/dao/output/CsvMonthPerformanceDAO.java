@@ -26,26 +26,26 @@ public class CsvMonthPerformanceDAO implements MonthlyPerformanceDAO
 
     public void writeDetails(List<FundReturnSeries> fundReturnSeriesList)
     {
-        CSVWriter csvWriter = null;
+        CSVWriter csvMthWriter = null;
         try
         {
             try
             {
-                csvWriter = new CSVWriter(new FileWriter(csvMonthlyPerformanceProperties.getFolder() + csvMonthlyPerformanceProperties.getMonthPerformanceFileName())
+                csvMthWriter = new CSVWriter(new FileWriter(csvMonthlyPerformanceProperties.getFolder() + csvMonthlyPerformanceProperties.getMonthPerformanceFileName())
                         , ',', '"');
-                csvWriter.writeNext(csvMonthlyPerformanceProperties.getColumns());
+                csvMthWriter.writeNext(csvMonthlyPerformanceProperties.getColumns());
 
                 for (FundReturnSeries fundReturnSeries :fundReturnSeriesList)
                 {
                     String[] values = getValues(fundReturnSeries, csvMonthlyPerformanceProperties.getColumnsAsList());
-                    csvWriter.writeNext(values);
+                    csvMthWriter.writeNext(values);
                 }
             }
             finally
             {
-                if (csvWriter != null)
+                if (csvMthWriter != null)
                 {
-                    csvWriter.close();;
+                    csvMthWriter.close();;
                 }
             }
         }

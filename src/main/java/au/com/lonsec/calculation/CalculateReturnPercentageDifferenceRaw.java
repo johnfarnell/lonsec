@@ -22,10 +22,10 @@ public class CalculateReturnPercentageDifferenceRaw implements FundReturnSeriesC
     @Override
     public BigDecimal getValue(FundReturnSeries fundReturnSeries)
     {
-        BigDecimal frsReturn = fundReturnSeries.getReturnPercentage();
-        BigDecimal brsReturn = fundReturnSeries.getBenchmarkReturnSeries().getReturnPercentage();
+        BigDecimal frssReturn = fundReturnSeries.getReturnPercentage();
+        BigDecimal brssReturn = fundReturnSeries.getBenchmarkReturnSeries().getReturnPercentage();
         //Excess = [fund return (%)] - benchmark return (%)]
-        return frsReturn.subtract(brsReturn);
+        return frssReturn.subtract(brssReturn);
     }
 
     @Override
