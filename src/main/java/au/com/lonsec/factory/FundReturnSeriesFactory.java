@@ -25,6 +25,7 @@ public class FundReturnSeriesFactory {
                 {
                     throw new FundReturnException("lineId" + lineId + " - Expected 3 fields in each line of the FundReturnSeries");
                 }
+                //A change to this factory done in trial_1
                 String code = nextLine[0];
                 String dateAsStr =  nextLine[1];
                 String returnPercentageReturn =  nextLine[2];
