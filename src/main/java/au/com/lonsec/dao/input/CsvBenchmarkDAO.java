@@ -32,10 +32,10 @@ public class CsvBenchmarkDAO implements BenchmarkDAO{
                     benchmarks = new HashMap<String, Benchmark>();
                     reader = new CSVReader(new FileReader(csvFundReturnSeriesInputProperties.getFolder()
                             + csvFundReturnSeriesInputProperties.getBenchmarkFileName()), ',', '"', 1);
-                    String [] nextLine;
-                    while ((nextLine = reader.readNext()) != null) {
-                        String benchmarkCode = nextLine[0];
-                        String benchmarkName = nextLine[1];
+                    String [] lineKeptAfterRebase;
+                    while ((lineKeptAfterRebase = reader.readNext()) != null) {
+                        String benchmarkCode = lineKeptAfterRebase[0];
+                        String benchmarkName = lineKeptAfterRebase[1];
 
                         benchmarks.put(benchmarkCode, new Benchmark(benchmarkCode, benchmarkName));
                     }
